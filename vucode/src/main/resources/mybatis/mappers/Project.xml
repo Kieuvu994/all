@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mvc.vo.phong">
+
+	<resultMap type="mvc.vo.Project" id="ProjectMap">
+		<id column="id" property="id" />
+		<result column="name" property="name" />
+		<result column="enable" property="enable" />
+		<result column="checkin" property="checkin" />
+		<result column="checkout" property="checkout" />
+	</resultMap>
+	<select id="selectOne" resultMap="ProjectMap">
+	<![CDATA[
+		select * from blog.phong where id = #{id}
+	]]>
+	</select>
+	<select id="selectAll"
+		resultMap="ProjectMap">
+	<![CDATA[
+		select * from blog.phong 
+	]]>
+	</select>
+	<!-- primitive , String -->
+	<!-- HashMap -->
+	<insert id="insertProject">
+<![CDATA[
+		INSERT INTO blog.phong (checkin, checkout, name) VALUES (#{checkin},#{checkout}, #{name});
+	]]>
+	</insert>
+
+	<update id="update">
+	</update>
+
+</mapper>
