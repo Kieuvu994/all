@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>Thymeleaf Home</h1>
+	<div class="wrapper">
+		<div class="form-signin">
+			<!-- 폼으로  아디를 j_username,비번을 j_password로 보내주면 자동으로 인메모리 디비이든 일반데이터베이스이든 확인함  -->
+			<form action="/springmvc/j_spring_security_check" method="post" id="form_login">
+ 				<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+ 				<h2 class="form-signin-heading textCenter">Sign In</h2>
+				<input type="text" name="j_username" class="form-control" id="j_username">
+				<input type="text" name="j_password" class="form-control" id="j_password"><br />
+				<button class="btn btn-lg btn-primary btn-block" id="btn_login">로그인</button>
+			</form>
+		</div>
+	</div>
+	
+</body>
+</html>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.2" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd">
+	<persistence-unit name="springMvc">
+		<class>vu.dto.Order</class>
+		<class>vu.dto.Orderitem</class>
+		<class>vu.dto.Product</class>
+		<class>vu.dto.Review</class>
+		<class>vu.dto.Shippingaddress</class>
+		<class>vu.dto.Size</class>
+		<class>vu.dto.Topping</class>
+		<class>vu.dto.User</class>
+	</persistence-unit>
+</persistence>

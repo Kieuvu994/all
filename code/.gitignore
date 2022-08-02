@@ -1,5 +1,5 @@
-# Created by https://www.toptal.com/developers/gitignore/api/eclipse,java,git,maven,intellij,gradle,node
-# Edit at https://www.toptal.com/developers/gitignore?templates=eclipse,java,git,maven,intellij,gradle,node
+# Created by https://www.toptal.com/developers/gitignore/api/java,maven,gradle,git,eclipse,intellij,node,yarn
+# Edit at https://www.toptal.com/developers/gitignore?templates=java,maven,gradle,git,eclipse,intellij,node,yarn
 
 ### Eclipse ###
 .metadata
@@ -379,6 +379,23 @@ dist
 # SvelteKit build / generate output
 .svelte-kit
 
+### yarn ###
+# https://yarnpkg.com/getting-started/qa#which-files-should-be-gitignored
+
+.yarn/*
+!.yarn/releases
+!.yarn/patches
+!.yarn/plugins
+!.yarn/sdks
+!.yarn/versions
+
+# if you are NOT using Zero-installs, then:
+# comment the following lines
+!.yarn/cache
+
+# and uncomment the following lines
+# .pnp.*
+
 ### Gradle ###
 .gradle
 **/build/
@@ -400,4 +417,4 @@ gradle-app.setting
 # Eclipse Core
 # JDT-specific (Eclipse Java Development Tools)
 
-# End of https://www.toptal.com/developers/gitignore/api/eclipse,java,git,maven,intellij,gradle,node
+# End of https://www.toptal.com/developers/gitignore/api/java,maven,gradle,git,eclipse,intellij,node,yarn
