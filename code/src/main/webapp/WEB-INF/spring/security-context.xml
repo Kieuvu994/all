@@ -17,7 +17,8 @@
 	<bean id="passwordEncoder" 
 		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"></bean>
 	
-	<security:authentication-manager alias="authenticationManager">
+	<security:authentication-manager alias="authenticationManager"><!-- quan ly xac thuc -->
+	<!-- nguoi cung cap xac thuc cho kh -->
 		<security:authentication-provider ref="customeAuthenticationProvider"></security:authentication-provider>
 		<security:authentication-provider user-service-ref="customeUserDetailsService">
 			<security:password-encoder ref="passwordEncoder"></security:password-encoder>

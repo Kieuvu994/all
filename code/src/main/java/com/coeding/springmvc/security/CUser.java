@@ -12,12 +12,13 @@ public class CUser  implements UserDetails{
 	String username;
 	String password;
 	boolean enable;
+	byte isSuperuser;
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
 		authorities.add(new SimpleGrantedAuthority("USER"));
-		if (username != null && username.equals("123")) {
+		if (username != null && isSuperuser==1) {
 			authorities.add(new SimpleGrantedAuthority("ADMIN"));
 			authorities.add(new SimpleGrantedAuthority("USER_MANAGER"));
 		}

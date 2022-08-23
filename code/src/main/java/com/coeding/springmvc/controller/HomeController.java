@@ -56,7 +56,7 @@ public class HomeController {
 		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
 		String formattedDate = dateFormat.format(date);
 		model.addAttribute("serverTime", formattedDate );
-		
+		model.addAttribute("message", ApplicationProperty.userName );
 		logger.info("Welcome home! The client locale is {}.", ApplicationProperty.userName);
 		logger.info("Welcome home! The client locale is {}.", ApplicationProperty.userEmail);
 
@@ -133,7 +133,6 @@ public class HomeController {
 		String formattedDate = dateFormat.format(date);
 		model.addAttribute("serverTime", formattedDate );
 		model.addAttribute("message", "admin" );
-		
 		return "home";
 	}
 
