@@ -1,5 +1,6 @@
 package com.coeding.springmvc.service;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
@@ -60,8 +61,10 @@ public class FileStorageService {
 
     public Resource loadFileAsResource(String fileName) {
         try {
-            Path filePath = this.fileStorageLocation.resolve(fileName).normalize();
-            Resource resource = new UrlResource(filePath.toUri());
+ //           Path filePath = this.fileStorageLocation.resolve(fileName).normalize();
+        	String dirFolder = "D:/images/";
+			Path pathFile = Paths.get(dirFolder, fileName);
+            Resource resource = new UrlResource(pathFile.toUri());
             if(resource.exists()) {
                 return resource;
             } else {

@@ -16,8 +16,8 @@
 	<modules>
 		<module>springMvc</module>
 		<module>code</module>
-    <module>mybatistest</module>
     <module>vucode</module>
+    <module>code1</module>
 	</modules>
 	<build>
 		<plugins>

@@ -61,7 +61,7 @@ public class FileRestController {
     public ResponseEntity<Resource> downloadFile(@PathVariable String fileName, HttpServletRequest request) {
         // Load file as Resource
         Resource resource = fileStorageService.loadFileAsResource(fileName);
-
+System.out.println(fileName);
         // Try to determine file's content type
         String contentType = null;
         try {

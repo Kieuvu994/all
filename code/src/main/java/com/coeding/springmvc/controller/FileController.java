@@ -27,7 +27,7 @@ import com.coeding.springmvc.dto.FileDTO;
 public class FileController implements ApplicationContextAware{
 	private static final Logger logger = LoggerFactory.getLogger(FileController.class);
 	
-	private static final String UPLOAD_PATH = "D:/kits-testroom/images/";
+	private static final String UPLOAD_PATH = "D:/images";
 	private WebApplicationContext context = null;
 
 	@RequestMapping(value = "/file.do", method = RequestMethod.GET)
