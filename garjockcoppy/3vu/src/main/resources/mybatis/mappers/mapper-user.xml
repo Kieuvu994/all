@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mrvu.user">
+    <resultMap id="userMap" type="MyUser">
+     <id property="id" column="id" />
+     <result property="dateJoined"	 column="date_joined" />
+     <result property="email" column="email" />
+     <result property="firstName" column="first_name" />
+     <result property="isActive" column="is_active" />
+     <result property="isStaff" column="is_staff" />
+     <result property="isSuperuser" column="is_superuser" />
+     <result property="lastLogin" column="last_login" />
+     <result property="lastName" column="last_name" />
+     <result property="password" column="password" />
+     <result property="username" column="username" />
+     <result property="image" column="image" />
+   </resultMap> 
+
+
+	<select id="listUser" resultMap="userMap"  >
+	<![CDATA[
+		SELECT * FROM userz ORDER BY id desc LIMIT 100
+		
+	]]>
+	</select>
+	
+	<select id="getUserByUsername" parameterType="String" resultMap="userMap">
+	<![CDATA[
+		select * from userz where username = #{username}
+	]]>
+	</select>
+	
+	<select id="getUserById" resultMap="userMap">
+	<![CDATA[
+		select * from userz where id = #{id}
+	]]>
+	</select>
+	
+	<select id="getUsersWithKey" resultMap="userMap">
+	<![CDATA[
+		select * from userz where 
+		(username LIKE #{key}) or (last_name LIKE #{key}) or (first_name LIKE #{key})
+	]]>
+	</select>
+	
+	<insert id="createUser" >
+	<![CDATA[
+		insert into userz (email, first_name,is_active, is_staff, is_superuser,last_name,username,password,date_joined,last_login,image)
+		values (#{email}, #{firstName},#{isActive}, #{isStaff}, #{isSuperuser}, #{lastName}, #{username}, #{password},now(),now(),#{image})
+	]]>	
+	</insert>
+
+	<update id="updateUser" parameterType="MyUser">
+	<![CDATA[
+		update userz set 
+		email=#{email},
+		last_name = #{lastName},
+		first_name = #{firstName},
+		is_active = #{isActive},
+		is_staff = #{isStaff},
+		is_superuser = #{isSuperuser},
+		image=#{image}
+		where id= #{id}
+		
+	]]>	
+	</update>
+	
+	<update id="resetpassword" parameterType="String">
+	<![CDATA[
+		update userz set 
+		password=123456
+		
+		where username= #{username}
+		
+	]]>	
+	</update>
+	
+	<delete id="deleteUser" parameterType="int">
+	<![CDATA[
+		DELETE FROM userz WHERE  id= #{id};
+	]]>	
+	</delete>
+	<update id="changePW" parameterType="com.coeding.springmvc.dto.LoginUser">
+	<![CDATA[
+		update userz set 
+		password=#{password}
+		
+		where username= #{username}
+		
+	]]>	
+	</update>
+</mapper>	

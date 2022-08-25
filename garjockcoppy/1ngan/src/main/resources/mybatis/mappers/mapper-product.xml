@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.product">
+  <!--  <resultMap id="productMap" type="com.coeding.springmvc.entity.Product">
+     <id property="_id" column="_id" />
+     <result property="brand" column="brand" />
+     <result property="categoryId" column="category_id" />
+     <result property="countInStock" column="count_instock" />
+     <result property="createdAt" column="created_at" />
+     <result property="description" column="description" />
+     <result property="image" column="image" />
+     <result property="name" column="name" />
+     <result property="price" column="price" />
+     <result property="rating" column="rating" />
+     <result property="isActive" column="is_active" />
+   </resultMap> -->
+
+
+	<select id="listProduct" resultType="com.coeding.springmvc.entity.Product">
+	<![CDATA[
+		SELECT * FROM productz inner join categoryz on productz.category_id = categoryz._id ;
+		
+	]]>
+	</select>
+	<select id="findById" parameterType="int" resultType="com.coeding.springmvc.entity.Product">
+	<![CDATA[
+		SELECT * FROM productz where _id = #{id} ;
+		
+	]]>
+	</select>
+	
+	<select id="findLastProduct"  resultType="com.coeding.springmvc.entity.Product">
+	<![CDATA[
+		SELECT * FROM productz order by createdAt DESC ;
+		
+	]]>
+	</select>
+	
+	<select id="findTopRatedProduct"  resultType="com.coeding.springmvc.entity.Product">
+	<![CDATA[
+		SELECT * FROM productz order by rating DESC ;
+		
+	]]>
+	</select>
+	
+	<select id="findTopReviewProduct"  resultType="com.coeding.springmvc.entity.Product">
+	<![CDATA[
+		SELECT * FROM productz order by numReview DESC ;
+		
+	]]>
+	</select>
+	
+	<select id="findByCatogory" parameterType="int" resultType="com.coeding.springmvc.entity.Product">
+	<![CDATA[
+		SELECT * FROM productz where category_id = #{category_id} ;
+		
+	]]>
+	</select>
+	
+	<select id="findProduct" parameterType="String" resultType="com.coeding.springmvc.entity.Product">
+	<![CDATA[
+		SELECT * FROM productz inner join categoryz on productz.category_id = categoryz._id where (productz.name Like '%' #{txt} '%' OR productz.brand Like '%' #{txt} '%' OR productz.price Like '%' #{txt} '%' OR productz.description Like '%' #{txt} '%' OR productz.rating Like '%' #{txt} '%' OR categoryz.name Like '%' #{txt} '%' ) ;
+	]]>
+	</select>
+	
+	<select id="listProductPaging" parameterType="int" resultType="com.coeding.springmvc.entity.Product">
+	<![CDATA[
+		SELECT * FROM productz limit #{offset},#{limit} ;	
+	]]>
+	</select>
+	
+	<select id="countProduct" parameterType="int" resultType="int">
+	<![CDATA[
+		SELECT Count(*) FROM productz;	
+	]]>
+	</select>
+	
+
+</mapper>	

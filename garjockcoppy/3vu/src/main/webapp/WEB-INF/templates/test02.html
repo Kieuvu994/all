@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>test01</title>
+</head>
+
+<body>
+	<form action="/login" method="post" id="form_login">
+				<input type="text" name="j_username" class="form-control" id="j_username">
+				<input type="text" name="j_password" class="form-control" id="j_password"><br />
+				<button class="btn btn-lg btn-primary btn-block" id="btn_login">로그인</button>
+			</form>
+	<table>
+		<thead>
+			<tr>
+				<td>Id</td>
+				<td>Transaction Id</td>
+				<td>Client Id</td>
+				<td>Mobile No.</td>
+			</tr>
+		</thead>
+
+		<tbody>
+			<c:if test="${!empty exchanges}">
+				<c:forEach item="${exchanges}" var="exchange">
+					<tr>
+						<td>${ exchange.id }</td>
+						<td>${ exchange.dateJoined }</td>
+						<td>${ exchange.email }</td>
+						<td>${ exchange.username} </td>
+					</tr>
+				</c:forEach>
+			</c:if>
+		</tbody>
+	</table>
+
+
+</body>
+
+</html>

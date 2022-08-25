@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.order">
+
+	<select id="findAll" resultType="com.coeding.springmvc.entity.Orderz">
+	<![CDATA[
+		SELECT * FROM orderz ;
+		
+	]]>
+	</select>
+	<select id="findById" parameterType="int" resultType="com.coeding.springmvc.entity.Orderz">
+	<![CDATA[
+		SELECT * FROM orderz where _id = #{id} ;
+		
+	]]>
+	
+	</select>
+	
+	<!-- values (now(),now(),0,0,now(),'PayPal',#{shippingPrice},#{taxPrice},#{totalPrice},1) -->
+	<insert id="create" parameterType="com.coeding.springmvc.entity.Orderz">
+	<![CDATA[
+		insert into orderz (createdAt,deliveredAt,isDelivered,isPaid,paidAt,paymentMethod,shippingPrice,taxPrice,totalPrice,user_id)
+		values (#{createdAt},#{deliveredAt},#{isDelivered},#{isPaid},#{paidAt},#{paymentMethod},#{shippingPrice},#{taxPrice},#{totalPrice},#{userz.id})
+	]]>
+	<selectKey resultType="int" keyProperty="id" order="AFTER">
+	<![CDATA[
+	    SELECT LAST_INSERT_ID()
+	    ]]>
+	  </selectKey>
+	</insert>
+	
+	<delete id="delete" parameterType="com.coeding.springmvc.entity.Orderz">
+	<![CDATA[
+		DELETE  FROM orderz
+  		WHERE _id=#{id}
+	]]>	
+	</delete>
+</mapper>	

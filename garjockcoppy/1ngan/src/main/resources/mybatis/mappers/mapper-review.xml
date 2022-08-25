@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.review">
+ 
+	<select id="findById" parameterType="int" resultType="com.coeding.springmvc.entity.Review">
+	<![CDATA[
+		SELECT reviewz.*, userz.username FROM reviewz inner join userz on reviewz.user_id = userz.id where reviewz.product_id = #{id} ;
+		
+	]]>
+	</select>
+</mapper>	
