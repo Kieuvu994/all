@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div{
+            width: 300px;
+            background-color: aquamarine;
+            height: 300px;
+            top: 0px;
+            left: 0px;
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+    <div ></div>
+    <script>
+        const box=document.querySelector('div');
+       
+        
+        document.addEventListener('keydown',function(e){
+            console.log(box);
+            let x=Number(box.style['left'].replace("px",""));
+            let y=Number(box.style['top'].replace("px",""));
+            switch(e.keyCode){
+                case 37: x-=4;
+                break;
+                case 38: y-=4;
+                break;
+                case 39: x+=4;
+                break;
+                case 40: y+=4;
+                break;
+            }
+            console.log(x,y);
+            (box.style['top']=y+'px');
+            (box.style['top']=y+'px');
+            (box.style['left']=x+'px');
+
+        });
+    </script>
+</body>
+</html>

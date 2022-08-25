@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<style>
+table, th, td {
+  border:1px solid black;
+  margin: 0 auto;
+}
+</style>
+<body>
+
+<h2>A basic HTML table</h2>
+
+<table style="width:100%" id="table">
+  <thead>
+    <tr>
+    <th>no</th>
+    <th>java</th>
+    <th>javascript</th>
+    <th>stringboot</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td>1</td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>3</td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+</tbody>
+</table>
+<div>
+<input type="button" value="addcol" id="addcol">
+<input type="button" value="addrow" id="addrow">
+<input type="button" value="deletecol" id="deletecol">
+<input type="button" value="deleterow" id="deleterow">
+</div>
+
+<script>
+    const addcol=document.getElementById('addcol');
+    const addrow=document.getElementById('addrow');
+    const deletecol=document.getElementById('deletecol');
+    const deleterow=document.getElementById('deleterow');
+    const table=document.getElementById('table');
+    addrow.onclick=function(){
+      //  var table=document.getElementsByName('table');
+      //  console.log(x);
+        return table.innerText='are you oke heu oi';
+
+    }
+
+
+</script>
+
+
+</body>
+</html>

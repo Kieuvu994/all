@@ -50,7 +50,7 @@
 				<button type="button" id="uploadButton" class="btn btn-primary">Upload file</button>
 			</form>
 			<div id="response-message"></div>
-			<img id="response-image" src=""></img>
+			<img id="1response-image" th:src="'/springmvc/api/file/download/'+'username1.jpg'"></img>
 		</td>
 		</tr></table>
 	</div>
@@ -100,7 +100,7 @@ function requestUploadFile(file) {
         var response = JSON.parse(xhr.responseText);
         if(xhr.status == 200) {
             messageBox.innerHTML = "<p>"+response.message+"</p>";
-            imageBox.src= ;
+            imageBox.src= response.fileDownloadUri;
         } else {
             messageBox.innerHTML = (response && response.message) || "Some Error Occurred";
         }

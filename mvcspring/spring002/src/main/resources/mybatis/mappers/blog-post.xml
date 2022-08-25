@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="blog.post">
+
+	<select id="recentOne" resultType="com.coeding.springmvc.entity.BlogPost">
+	<![CDATA[
+		SELECT * FROM blog_post ORDER BY id desc LIMIT 1
+		
+	]]>
+	</select>
+	
+	<select id="selectAll" resultType="com.coeding.springmvc.entity.BlogPost">
+	<![CDATA[
+		select * from blog_post order by id
+	]]>
+	</select>
+	
+	<insert id="insert" parameterType="com.coeding.springmvc.entity.BlogPost">
+	<![CDATA[
+		insert into blog_post (title, article, author_id, featured, enabled, comments_enabled, views) 
+		values (#{title}, #{article}, #{authorId}, 1, 1, 0, 0)
+	]]>	
+	</insert>
+</mapper>	

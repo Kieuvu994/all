@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        console.log(typeof('  100'));
+        console.log(typeof(  100));
+        console.log(typeof( 100));
+        console.log(typeof([]));
+        console.log(typeof({f:10}));
+        fn=function(String){
+
+        };
+        console.log(typeof(fn));
+        var v2=20;
+        let as=30;
+        const vs=100;//khong thay doi
+        {
+
+        };
+ //       todo();
+        (function(){
+            console.log("hi");
+        })();
+        (()=>{console.log('lamda');})();
+        ((fn)=>{fn()();})(
+            function(){
+                console.log('call backfuntion');
+                return function(){
+                    console.log('be return');
+                }
+            }
+        )
+        ((fn)=>{fn();})(
+            function(){
+                console.log('call backfuntion');
+                return function(){
+                    console.log('be return');
+                }
+            }
+        )
+//////////////////////06
+            let o1={id:'james'};
+
+
+    </script>
+</body>
+</html>

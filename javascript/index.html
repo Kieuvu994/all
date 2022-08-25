@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Chat</title>
+</head>
+<body>
+    <h1>Node http server</h1>
+
+    <form action="/enter" method="GET">
+        Name <input type="text" id="nick" name="nickname">
+        Room <select id='room' name='roomname'>
+            <option value="ROOM-01">ROOM 1</option>
+            <option value="ROOM-02">ROOM 2</option>
+            <option value="ROOM-03">ROOM 3</option>
+        </select>
+        <input type="submit" value="들어가기">
+    </form>
+
+    <script>
+        localStorage.test = 'testvalue';
+        sessionStorage.test = 'sessionvalue';
+    </script>
+</body>
+</html>

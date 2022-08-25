@@ -66,6 +66,7 @@ public class FileStorageService {
 			Path pathFile = Paths.get(dirFolder, fileName);
             Resource resource = new UrlResource(pathFile.toUri());
             if(resource.exists()) {
+            	System.out.println("resource===>>"+resource.toString());
                 return resource;
             } else {
                 throw new FileStorageException("File not found " + fileName);

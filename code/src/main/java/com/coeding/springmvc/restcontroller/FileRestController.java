@@ -43,6 +43,7 @@ public class FileRestController {
                 .path("/api/file/download/")
                 .path(fileName)
                 .toUriString();
+        System.out.println("dowload----->"+fileDownloadUri);
         return (
         		new UploadFileResponse(fileName, fileDownloadUri, file.getContentType(), file.getSize(), message)
         		);

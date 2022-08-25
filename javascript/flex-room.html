@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Room-WebChat</title>
+
+    <!-- Room style -->
+    <style>
+        /* 공통 tag style*/
+        * {
+            margin: 0 auto; /* center align*/
+            padding: 0;
+        }
+        header{
+            background-color: #000000;
+            color: #FFFFFF;
+            padding: 8px;
+        }
+        footer{
+            text-align: center;
+            background-color: #333333;
+            color: #FFFFFF;
+            padding: 8px;
+        }
+        footer input {
+            width: 100%;
+            font-size: 12pt;
+            line-height: 24px;
+        }
+        p{
+            border-bottom:1px dashed #666666;
+        }
+        video {
+            position: relative;
+            width: 98%;
+        }
+
+        /* 공통 class style */
+        /* flexible box layout  */
+        .row {
+            width: 98%;
+            display: flex;
+        }
+        .col {
+            border: 1px dashed #8888AA;
+        }
+        /* 개별 id style*/
+        #section {
+            flex: 10;
+            height: 800px;
+            overflow: auto;
+        }
+        #aside {
+            flex: 2;
+            height: 800px;
+            overflow: auto;
+            background-color: #888888;
+        }
+    </style>
+</head>
+<body>
+    
+    <header>
+        <div style="width: 64px; height: 24px;">LOGO</div>
+        <!-- 방 이름 표시   -->
+        <span>ROOM : </span><span id="roomname"></span>
+    </header>
+    <div class="row">
+        <div class="col" id="section"><h3>대화목록</h3></div>
+        <div class="col" id="aside"><h3>접속자 <button id="refreshBtn">새로고침</button></h3>
+            <!-- 카메라 영상이 보여질 video 요소    -->
+            <video id="localVideo" autoplay></video>
+            <video id="remoteVideo" autoplay></video>
+        </div>
+    </div>
+    <footer class="row">
+        <div class="col" style="flex: 1"></div>
+        <div class="col" style="flex: 10;">
+            <input type="text" id="message" name="willam">
+        </div>
+        <div class="col" style="flex: 1;">
+            <button id="sendBtn">보내기</button>
+        </div>
+    </footer>
+
+    <!-- socket.io  
+        WebRTC 가 적용되면서 socket.io 는 메시지 중계, 즉 signaling 을 담당 -->
+    <script src="/socket.io/socket.io.js"></script>
+    <!-- WebRTC API 
+        media 교환을 위한 스트림을 제어 담당    -->
+    <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
+    <script src="./rtc.js"></script>
+    <script>
+
+        function getCookie(name) {
+            let matches = document.cookie.match(new RegExp(
+                "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+            ));
+            return matches ? decodeURIComponent(matches[1]) : undefined;
+        }
+        function clearAllCookies(domain, path) {
+            var doc = document,
+                domain = domain || doc.domain,
+                path = path || '/',
+                cookies = doc.cookie.split(';'),
+                now = +(new Date);
+            for (var i = cookies.length - 1; i >= 0; i--) {
+                doc.cookie = cookies[i].split('=')[0] + '=; expires=' + now + '; domain=' + domain + '; path=' + path;
+            }
+        }
+
+        // 메세지 입력 시 enter 또는 button 클릭 시 socket event 발생
+        function sendMessage(data){
+            socket.emit('sendMessage', data);
+        }
+
+    const participants = [];//[0]자신
+    let nickname;
+    let room;
+    window.addEventListener('load', function(){
+        // index.html 에서 입력하여 /enter 거쳐 쿠키로 저장된 값을 sessionStorage 로 복사
+        sessionStorage.setItem('nickname', getCookie('nickname'));
+        sessionStorage.setItem('roomname', getCookie('roomname'));
+        // 쿠키 값은 삭제
+        clearAllCookies('localhost','/');
+
+        nickname=sessionStorage.getItem('nickname');
+        room=sessionStorage.getItem('roomname');
+
+        if( nickname == undefined || nickname == '' || room == undefined || room == ''){
+            window.location.href = '/';
+        }
+
+        // socket 접속
+        socket = io();
+        // socket namespace 로 접속
+        // socket = io('/'+sessionStorage.getItem('roomname'));
+
+        //  room 들어가기
+        socket.emit('enter room',room);
+
+        socket.on('updateMessage', function(data){
+            const p = document.createElement('p');
+            p.innerHTML = data.nickname +': ' + data.msg;
+            section.appendChild(p);
+            section.scrollTop = section.scrollHeight;
+        });
+        socket.on('updateMember', function(data){
+            const childs = document.querySelectorAll('#aside > p');
+            childs.forEach(p => {
+                p.parentNode.removeChild(p);
+            });
+            data.forEach(element => {
+                const p = document.createElement('p');
+                p.innerHTML = element;
+                aside.appendChild(p);   
+            });
+        });
+        // WebRTC 화상 연결
+        socket.on('created', (room,id) => {
+            console.log('Created room {room: ' + room+', socket_id : '+id+'}');
+            isInitiator= true;
+            isChannelReady= true;
+        });
+        socket.on('enter user', userId => {
+            console.log('joined : '+ userId );// userId is socket id
+        });
+        socket.on('full', room=>{
+            console.log('Room '+room+'is full');
+        });
+        socket.on('join',room=>{
+            console.log('Another peer made a request to join room' + room);
+            console.log('This peer is the initiator of room' + room + '!');
+            isChannelReady = true;
+        });
+        socket.on('joined',room=>{
+            console.log('joined : '+ room );
+            isChannelReady= true;
+        });
+        socket.on('log', array=>{
+            console.log.apply(console,array);
+        });
+        socket.on('message', (message)=>{
+            console.log('Client received message :',message);
+            if(message === 'got user media'){
+                maybeStart();
+            }else if(message.type === 'offer'){
+                if(!isInitiator && !isStarted){
+                maybeStart();
+                }
+                pc.setRemoteDescription(new RTCSessionDescription(message));
+                doAnswer();
+            }else if(message.type ==='answer' && isStarted){
+                pc.setRemoteDescription(new RTCSessionDescription(message));
+            }else if(message.type ==='candidate' &&isStarted){
+                const candidate = new RTCIceCandidate({
+                sdpMLineIndex : message.label,
+                candidate:message.candidate
+                });
+
+                pc.addIceCandidate(candidate);
+            }
+        });
+
+
+        document.querySelector('#message').name = sessionStorage.getItem('nickname');
+        document.querySelector('#roomname').innerHTML = sessionStorage.getItem('roomname');
+
+        const section = document.querySelector('#section');
+        const aside = document.querySelector('#aside');
+        const text = document.querySelector('#message');
+        text.addEventListener('keypress', function(e){
+            // input 에 키보드 입력할 때마다 발생
+            if(e.keyCode==13) {
+                // socket 이벤트 발생
+                sendMessage({
+                    nickname: sessionStorage.getItem('nickname'),
+                    room: room,
+                    msg : text.value
+                });
+                text.value = '';
+            }
+        });
+        const sendBtn = document.querySelector('#sendBtn');
+        sendBtn.addEventListener('click', function(){
+            // socket 이벤트 발생
+            sendMessage({
+                    nickname: sessionStorage.getItem('nickname'),
+                    room: room,
+                    msg : text.value
+                });
+            text.value = '';
+        });
+        // 접속자 목록 갱신을 위한 Ajax 요청
+        const refreshBtn = document.querySelector('#refreshBtn');
+        refreshBtn.addEventListener('click', function(){
+            const xhr = new XMLHttpRequest();
+            xhr.open('GET', '/api/nicklist');
+            xhr.send();
+            xhr.onreadystatechange = function(data){
+                if( xhr.readyState == 4 && xhr.status == 200){
+                    const jsonObj = JSON.parse(xhr.responseText);
+                    console.log(jsonObj);
+                    const childs = document.querySelectorAll('#aside > p');
+                    childs.forEach(p => {
+                        p.parentNode.removeChild(p);
+                    });
+                    jsonObj.nicklist.forEach(element => {
+                        const p = document.createElement('p');
+                        p.innerHTML = element;
+                        aside.appendChild(p);   
+                    });
+                }
+
+            }
+        });
+
+
+    });
+    //////
+    // 브라우저 창/탭 닫기 감지는 javascript 에서 할 수 없다.
+    //  beforeunload, unpload 는 페이지 이동 시 발생되는 이벤트이다.
+    window.addEventListener('beforeunload', function(event){
+        // 표준에 따라 기본 동작 방지 
+        event.preventDefault();
+        console.log('before unload');
+        var confirmationMessage = "\o/";
+        (event || window.event).returnValue = confirmationMessage; //Gecko + IE
+        return confirmationMessage;                            //Webkit, Safari, Chrome
+        
+        // 방에서 나간 상태를 server 로 알림
+        const xhr = new XMLHttpRequest();
+        xhr.open('GET', '/api/out?roomname='+sessionStorage.getItem('roomname')+'&'+'nickname='+sessionStorage.getItem('nickname'));
+        xhr.send();
+        xhr.onreadystatechange = function(data){
+            if( xhr.readyState == 4 && xhr.status == 200){
+            }
+        }
+    });
+    // 브라우저 창 종료 이벤트
+    window.addEventListener('unload', function(event){
+        // 표준에 따라 기본 동작 방지 
+        event.preventDefault();
+        socket.emit('disconnection', socket.id);
+    });
+    </script>
+</body>
+</html>

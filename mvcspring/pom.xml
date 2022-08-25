@@ -1,0 +1,18 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>mrvu</groupId>
+    <artifactId>mrvu</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  <artifactId>mvcspring</artifactId>
+  <packaging>pom</packaging>
+  <modules>
+  	<module>spring001</module>
+  	<module>spring001-1</module>
+  	<module>spring002</module>
+  	<module>spring003</module>
+  	<module>spring004</module>
+  	<module>spring005</module>
+  </modules>
+</project>

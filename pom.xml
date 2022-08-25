@@ -18,6 +18,7 @@
 		<module>code</module>
     <module>vucode</module>
     <module>code1</module>
+    <module>mvcspring</module>
 	</modules>
 	<build>
 		<plugins>
