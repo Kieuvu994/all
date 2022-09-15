@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.size">
+  <!--  <resultMap id="productMap" type="com.coeding.springmvc.entity.Product">
+     <id property="_id" column="_id" />
+     <result property="brand" column="brand" />
+     <result property="categoryId" column="category_id" />
+     <result property="countInStock" column="count_instock" />
+     <result property="createdAt" column="created_at" />
+     <result property="description" column="description" />
+     <result property="image" column="image" />
+     <result property="name" column="name" />
+     <result property="password" column="password" />
+     <result property="price" column="price" />
+     <result property="rating" column="rating" />
+     <result property="isActive" column="is_active" />
+   </resultMap> -->
+
+
+	<select id="listSize" resultType="com.coeding.springmvc.entity.Size">
+	<![CDATA[
+		SELECT * FROM sizez ;
+		
+	]]>
+	</select>
+	<!-- <select id="findById" parameterType="int" resultType="com.coeding.springmvc.entity.Product">
+	<![CDATA[
+		SELECT * FROM productz where _id = #{id} ;
+		
+	]]>
+	</select> -->
+	
+	<!-- <select id="getUserById" resultMap="userMap">
+	<![CDATA[
+		select * from user where id = 1
+	]]>
+	</select>
+	
+	<insert id="createUser" parameterType="com.coeding.springmvc.entity.BlogPost">
+	<![CDATA[
+		
+	]]>	
+	</insert>
+
+	<update id="updateUser" parameterType="com.coeding.springmvc.entity.BlogPost">
+	<![CDATA[
+		
+	]]>	
+	</update>
+	
+	<delete id="deleteUser" parameterType="com.coeding.springmvc.entity.BlogPost">
+	<![CDATA[
+		
+	]]>	
+	</delete> -->
+</mapper>	

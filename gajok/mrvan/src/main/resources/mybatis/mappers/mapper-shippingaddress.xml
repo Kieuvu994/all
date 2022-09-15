@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="thienvan.shippingaddress">
+
+	<select id="listShippingaddress" resultType="com.coeding.springmvc.entity.Shippingaddressz"  >
+	<![CDATA[
+		SELECT * FROM shippingaddressz ORDER BY _id desc LIMIT 100
+		
+	]]>
+	</select>
+
+	<insert id="addShippingaddress" >
+	<![CDATA[
+		insert into shippingaddressz (address, city ,country, postalCode, shippingPrice, order_id )
+		values (#{address}, #{city}, #{country}, #{postalCode}, #{shippingPrice}, #{orderz})
+	]]>	
+	</insert>
+	
+</mapper>	

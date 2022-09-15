@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.category">
+   
+	<select id="findAll" resultType="com.coeding.springmvc.entity.Categoryz">
+	<![CDATA[
+		SELECT * FROM categoryz ;
+		
+	]]>
+	 </select>
+	 
+	<insert id="create" parameterType="com.coeding.springmvc.entity.Categoryz">
+	<![CDATA[
+		insert into categoryz (name) 
+		values (#{name})
+	]]>	
+	</insert>
+	
+	<update id="update" parameterType="com.coeding.springmvc.entity.Categoryz">
+	<![CDATA[
+		update categoryz set name = #{name} where _id = #{id}
+	]]>	
+	</update>
+	
+	<delete id="delete" parameterType="com.coeding.springmvc.entity.Categoryz">
+	<![CDATA[
+		DELETE  FROM categoryz
+  		WHERE _id=#{id}
+	]]>	
+	</delete>
+	
+	<select id="findById" parameterType="com.coeding.springmvc.entity.Categoryz" resultType="com.coeding.springmvc.entity.Categoryz">
+	<![CDATA[
+		SELECT * FROM categoryz where _id = #{id}
+	]]>
+	</select>
+	 
+	<!-- <select id="findById" parameterType="int" resultType="com.coeding.springmvc.entity.Product">
+	<![CDATA[
+		SELECT * FROM productz where _id = #{id} ;
+		
+	]]>
+	</select> -->
+	
+	<!-- <select id="getUserById" resultMap="userMap">
+	<![CDATA[
+		select * from user where id = 1
+	]]>
+	</select>
+	
+	<insert id="createUser" parameterType="com.coeding.springmvc.entity.BlogPost">
+	<![CDATA[
+		
+	]]>	
+	</insert>
+
+	<update id="updateUser" parameterType="com.coeding.springmvc.entity.BlogPost">
+	<![CDATA[
+		
+	]]>	
+	</update>
+	
+	<delete id="deleteUser" parameterType="com.coeding.springmvc.entity.BlogPost">
+	<![CDATA[
+		
+	]]>	
+	</delete> -->
+	<!-- 
+	<insert id="insert" parameterType="com.theplayer.kits.foodboys.vo.User">
+	<![CDATA[
+		insert into user (username, password) 
+		values (#{username}, #{password})
+	]]>	
+	</insert>
+
+	<update id="update" parameterType="com.theplayer.kits.foodboys.vo.User">
+	<![CDATA[
+		     update user set password = #{password} where user_id = #{user_id}
+	]]>
+	</update>
+	
+	<select id="selectList" resultType="com.theplayer.kits.foodboys.vo.User">
+	<![CDATA[
+		SELECT * FROM user where status = TRUE
+	]]>
+	</select>
+   
+	<select id="selectOne" parameterType="com.theplayer.kits.foodboys.vo.User" resultType="com.theplayer.kits.foodboys.vo.User">
+	<![CDATA[
+		SELECT * FROM user ORDER BY user_id desc LIMIT 1
+	]]>
+	</select>
+	
+	<select id="findUsername" parameterType="com.theplayer.kits.foodboys.vo.User" resultType="com.theplayer.kits.foodboys.vo.User">
+	<![CDATA[
+		SELECT * FROM user where username = #{username}
+	]]>
+	</select>
+	
+	<select id="findAccount" parameterType="com.theplayer.kits.foodboys.vo.User" resultType="com.theplayer.kits.foodboys.vo.User">
+	<![CDATA[
+		SELECT * FROM user where username = #{username} and password = #{password}
+	]]>
+	</select>
+	 -->
+</mapper>	

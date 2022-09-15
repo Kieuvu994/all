@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.role">
+
+	<select id="findAll" resultType="com.coeding.springmvc.entity.Rolez">
+	<![CDATA[
+		SELECT * FROM rolez
+		
+	]]>
+	</select>
+	
+	<select id="findById" parameterType="int" resultType="com.coeding.springmvc.entity.Rolez">
+	<![CDATA[
+		select * from rolez where _id = #{id}
+	]]>
+	</select>
+
+	<select id="findByRole" parameterType="string" resultType="com.coeding.springmvc.entity.Rolez">
+	<![CDATA[
+		select * from rolez where name = #{r}
+	]]>
+	</select>
+	
+	<insert id="create" parameterType="com.coeding.springmvc.entity.Rolez">
+	<![CDATA[
+	insert into rolez (name) 
+		values (#{name})
+	]]>	
+	</insert>
+	
+	<update id="update" parameterType="com.coeding.springmvc.entity.Rolez">
+	<![CDATA[
+		update rolez set name = #{name} where _id = #{id}
+	]]>	
+	</update>
+	
+	<delete id="delete" parameterType="com.coeding.springmvc.entity.Rolez">
+	<![CDATA[
+		DELETE  FROM rolez
+  		WHERE _id=#{id}
+	]]>	
+	</delete>
+	
+</mapper>	

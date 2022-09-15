@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mrvu.user">
+   <resultMap id="userMap" type="com.coeding.springmvc.entity.User">
+     <id property="id" column="id" />
+     <result property="dateJoined" column="date_joined" />
+     <result property="email" column="email" />
+     <result property="firstName" column="first_name" />
+     <result property="isActive" column="is_active" />
+     <result property="isStaff" column="is_staff" />
+     <result property="isSuperuser" column="is_superuser" />
+     <result property="lastLogin" column="last_login" />
+     <result property="lastName" column="last_name" />
+     <result property="username" column="username" />
+   </resultMap>
+
+
+	<select id="listUser" resultMap="userMap">
+	<![CDATA[
+		SELECT * FROM userz ORDER BY id desc LIMIT 1
+		
+	]]>
+	</select>
+	
+	<select id="getUserById" resultMap="userMap">
+	<![CDATA[
+		select * from userz where id = 1
+	]]>
+	</select>
+	<select id="getUserByUserName" resultMap="userMap" parameterType="String">
+	<![CDATA[
+		select * from userz where username = #{username}
+	]]>
+	</select>
+
+	
+	
+</mapper>	

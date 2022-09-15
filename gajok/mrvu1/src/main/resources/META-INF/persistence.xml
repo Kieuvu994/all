@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.2" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd">
+	<persistence-unit name="vu">
+		<class>com.coeding.springmvc.entitys.Categoryz</class>
+		<class>com.coeding.springmvc.entitys.Orderitemz</class>
+		<class>com.coeding.springmvc.entitys.Orderz</class>
+		<class>com.coeding.springmvc.entitys.Productz</class>
+		<class>com.coeding.springmvc.entitys.Reviewz</class>
+		<class>com.coeding.springmvc.entitys.Rolez</class>
+		<class>com.coeding.springmvc.entitys.Shippingaddressz</class>
+		<class>com.coeding.springmvc.entitys.Sizez</class>
+		<class>com.coeding.springmvc.entitys.Topping</class>
+		<class>com.coeding.springmvc.entitys.Userz</class>
+	</persistence-unit>
+</persistence>

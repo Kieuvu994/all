@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>Thymeleaf Home</h1>
+	
+	<fieldset>
+		<label>Message : </label>
+		<div id="msgbox"></div>		
+	</fieldset>
+
+	<fieldset>
+		<label>File : </label>
+		<li> <button id="file.do">File Upload</button> </li>
+	</fieldset>
+
+	<fieldset>
+		<label>Users : </label>
+		<li> <button id="userList">User List</button></li>
+		<li> <button id="userAdd">User Login</button> 
+			<input type="text" class="login" name="username" placeholder="User Name"/>
+			<input type="text" class="login" name="password" placeholder="User Password"/>
+		</li>
+		<li> <button id="userAdd">User Add</button> 
+			<input type="text" class="add" name="username" placeholder="User Name"/>
+			<input type="text" class="add" name="password" placeholder="User Password"/>
+			<input type="text" class="add" name="email" placeholder="User Email"/>
+		</li>
+		<li> <button id="userEdit">User Edit</button>
+			<input type="text" class="add" name="username" placeholder="william stanford mario" readonly/>
+			<input type="text" class="add" name="password" placeholder="User Password"/>
+			<input type="text" class="add" name="email" placeholder="User Email"/>
+		</li>
+		<li> <button id="userDelete">User Delete</button>
+			<input type="text" class="delete" name="username" placeholder="User Name"/>
+		</li>
+		<li> <button id="userSearch">User Search</button>
+			<input type="text" class="search" name="key" placeholder="User Search key"/>
+		</li>
+	</fieldset>
+	
+	<hr/>
+	
+	
+	<script>
+		window.addEventListener('load', function(){
+			const msgBox = document.querySelector('#msgbox');
+			const btnFile = document.querySelector('#file.do');
+			const btnList = document.querySelector('#userList');
+			const btnAdd = document.querySelector('#userAdd');
+			const btnEdit = document.querySelector('#userEdit');
+			const btnDelete = document.querySelector('#userDelete');
+			const btnSearch = document.querySelector('#userSearch');
+			
+			btnList.addEventListener('click', function(){
+				var r = new XMLHttpRequest();
+				r.open("GET", "/vu/api/users/list", true);
+				r.onreadystatechange = function () {
+				  if (r.readyState != 4 || r.status != 200) return;
+				  	msgBox.innerText = ("Success: \r\n\n" + r.responseText);
+				};
+//				r.send("banana=yellow"); // POST
+				r.send();
+			});
+		});
+	
+		
+	</script>
+</body>
+</html>

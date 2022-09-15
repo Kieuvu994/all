@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.orderitem">
+
+	<select id="findAll" resultType="com.coeding.springmvc.entity.Orderitemz">
+	<![CDATA[
+		SELECT * FROM orderitemz ;
+		
+	]]>
+	</select>
+	<select id="findById" parameterType="int" resultType="com.coeding.springmvc.entity.Orderitemz">
+	<![CDATA[
+		SELECT * FROM orderitemz where _id = #{id} ;
+	]]>
+	</select>
+	
+	<select id="findOrderItemByOrderID" parameterType="int" resultType="com.coeding.springmvc.entity.Orderitemz">
+	<![CDATA[
+		SELECT * FROM orderitemz where order_id = #{id}
+
+	]]>
+	</select>
+	
+	<insert id="create" parameterType="com.coeding.springmvc.entity.Orderitemz">
+	<![CDATA[
+		insert into orderitemz (image,name,price,qty,order_id,product_id,size_id, topping_id)
+		values (#{image},#{name},#{price},#{qty},#{orderID},#{productID}, #{sizeID}, #{toppingID})
+	]]>	
+	</insert>
+	
+	<update id="update" parameterType="com.coeding.springmvc.entity.Orderitemz">
+	<![CDATA[
+		update orderitemz set name = #{name},image = #{image},price = #{price},
+		qty = #{qty},order_id = #{orderID},product_id = #{productID}
+		where _id = #{id}
+	]]>	
+	</update>
+	
+	<delete id="delete" parameterType="com.coeding.springmvc.entity.Orderitemz">
+	<![CDATA[
+		DELETE  FROM orderitemz
+  		WHERE _id=#{id}
+	]]>	
+	</delete>
+	
+</mapper>	

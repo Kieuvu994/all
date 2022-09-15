@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.topping">
+
+	<select id="listTopping" resultType="com.coeding.springmvc.entity.Topping">
+	<![CDATA[
+		SELECT * FROM topping ;
+		
+	]]>
+	</select>
+	<!-- <select id="findById" parameterType="int" resultType="com.coeding.springmvc.entity.Product">
+	<![CDATA[
+		SELECT * FROM productz where _id = #{id} ;
+		
+	]]>
+	</select> -->
+	
+	<!-- <select id="getUserById" resultMap="userMap">
+	<![CDATA[
+		select * from user where id = 1
+	]]>
+	</select>
+	
+	<insert id="createUser" parameterType="com.coeding.springmvc.entity.BlogPost">
+	<![CDATA[
+		
+	]]>	
+	</insert>
+
+	<update id="updateUser" parameterType="com.coeding.springmvc.entity.BlogPost">
+	<![CDATA[
+		
+	]]>	
+	</update>
+	
+	<delete id="deleteUser" parameterType="com.coeding.springmvc.entity.BlogPost">
+	<![CDATA[
+		
+	]]>	
+	</delete> -->
+</mapper>	

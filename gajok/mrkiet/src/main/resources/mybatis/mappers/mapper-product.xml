@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.product">
+
+   <resultMap id="productMap" type="com.coeding.springmvc.entity.Productz">
+     <id property="id" column="_id" />
+     <result property="brand" column="brand" />
+     <result property="com.coeding.springmvc.entity.Categoryz" column="category_id" />
+     <result property="countInStock" column="countInStock" />
+     <result property="createdAt" column="createdAt" />
+     <result property="description" column="description" />
+     <result property="image" column="image" />
+     <result property="name" column="name" />
+     <result property="price" column="price" />
+     <result property="rating" column="rating" />
+   </resultMap>
+   
+
+	<select id="findAll" resultType="com.coeding.springmvc.entity.Productz">
+	<![CDATA[
+		SELECT * FROM productz
+		
+	]]>
+	</select>
+	<select id="findById" parameterType="int" resultType="com.coeding.springmvc.entity.Productz">
+	<![CDATA[
+		SELECT * FROM productz where _id = #{id} ;
+		
+	]]>
+	</select>
+	
+	<select id="findAllProductCategoryName" parameterType="int" resultType="com.coeding.springmvc.entity.Productz">
+	<![CDATA[
+		SELECT productz.*, categoryz.name FROM mydbcoffee.productz
+		INNER JOIN
+		mydbcoffee.categoryz
+		ON mydbcoffee.productz.category_id= mydbcoffee.categoryz._id
+		
+	]]>
+	</select>
+	
+	<select id="findAllProductByCategoryId" parameterType="int" resultType="com.coeding.springmvc.entity.Productz">
+	<![CDATA[
+		SELECT * FROM mydbcoffee.productz
+		INNER JOIN
+		mydbcoffee.categoryz
+		ON mydbcoffee.productz.category_id= mydbcoffee.categoryz._id
+		AND mydbcoffee.categoryz._id = #{id}
+		ORDER BY price DESC
+		
+	]]>
+	</select>
+	
+	<insert id="create" parameterType="com.coeding.springmvc.entity.Productz">
+	<![CDATA[
+		insert into productz (name,category_id,price,description,image,createdAt,user_id)
+		values (#{name},#{category_id._id},#{price},#{description},#{image},now(), #{userz.id})
+	]]>	
+	</insert>
+	
+	<update id="update" parameterType="com.coeding.springmvc.entity.Productz">
+	<![CDATA[
+		update productz set name = #{name},category_id = #{category_id._id},price = #{price},
+		description = #{description},image = #{image},createdAt = now()
+		where _id = #{id}
+	]]>	
+	</update>
+	
+	<delete id="delete" parameterType="com.coeding.springmvc.entity.Productz">
+	<![CDATA[
+		DELETE  FROM productz
+  		WHERE _id=#{id}
+	]]>	
+	</delete>
+	
+	<!-- <select id="getUserById" resultMap="userMap">
+	<![CDATA[
+		select * from user where id = 1
+	]]>
+	</select>
+	
+	<insert id="createUser" parameterType="com.coeding.springmvc.entity.BlogPost">
+	<![CDATA[
+		
+	]]>	
+	</insert>
+
+	<update id="updateUser" parameterType="com.coeding.springmvc.entity.BlogPost">
+	<![CDATA[
+		
+	]]>	
+	</update>
+	
+	<delete id="deleteUser" parameterType="com.coeding.springmvc.entity.BlogPost">
+	<![CDATA[
+		
+	]]>	
+	</delete> -->
+</mapper>	

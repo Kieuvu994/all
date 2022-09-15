@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<!-- 
+ Author: Quan
+ -->
+
+<mapper namespace="mapper.product">
+   <resultMap id="productMap" type="com.coeding.springmvc.entity.Product">
+     <id property="id" column="_id" />
+     <result property="brand" column="brand" />
+     <result property="categoryId" column="category_id" />
+     <result property="countInStock" column="countInStock" />
+     <result property="createdAt" column="created_at" />
+     <result property="description" column="description" />
+     <result property="image" column="image" />
+     <result property="name" column="name" />
+     <result property="price" column="price" />
+     <result property="rating" column="rating" />
+     <result property="isActive" column="is_active" />
+   </resultMap>
+
+
+	<select id="listProduct" resultMap="productMap">
+	<![CDATA[
+		SELECT * FROM productz ;
+		
+	]]>
+	</select>
+	<select id="findById" parameterType="int" resultMap="productMap">
+	<![CDATA[
+		SELECT * FROM productz where _id = #{id} ;
+		
+	]]>
+	</select>
+	
+	<select id="selectByCategory" resultType="com.coeding.springmvc.entity.Product">
+	<![CDATA[
+		SELECT * FROM productz INNER JOIN categoryz ON productz.category_id = categoryz._id
+  AND categoryz._id = #{catId};
+	]]>
+	</select>
+	
+	<select id="findByName" resultType="com.coeding.springmvc.entity.Product">
+	<![CDATA[
+		SELECT * FROM productz where name = #{name}
+	]]>
+	</select>
+	
+	<insert id="addProduct" parameterType="com.coeding.springmvc.entity.Product">
+	<![CDATA[
+		INSERT INTO productz ( name, price, description, image, countInStock)
+  values ( #{name}, #{price}, #{description}, #{image}, #{countInStock})
+	]]>
+	</insert>
+	
+	<update id="updateCountInStock" parameterType="com.coeding.springmvc.entity.Product">
+	<![CDATA[
+		UPDATE productz SET countInStock = #{countInStock} WHERE _id = #{_id}
+	]]>
+	</update>
+	
+	<delete id="deleteProduct" parameterType="com.coeding.springmvc.entity.Product">
+		DELETE FROM productz WHERE _id = #{_id}
+	</delete>
+	
+	
+	<select id="recentOne" resultType="com.coeding.springmvc.entity.Product">
+	<![CDATA[
+		SELECT * FROM productz ORDER BY _id desc LIMIT 1
+	]]>
+	</select>
+	
+	
+</mapper>	
