@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache.xsd"
+    updateCheck="false" name="__DEFAULT__">
+
+    <cache name="_default-region" maxElementsInMemory="500" eternal="true" />
+    <cache name="_sql-region" maxElementsInMemory="500" eternal="true" />
+    <cache name="_message-definition-region" maxElementsInMemory="500" eternal="true" />
+    <cache name="_service-region" maxElementsInMemory="500" eternal="true" />
+    <cache name="_column-region" maxElementsInMemory="500" eternal="true" />
+</ehcache>

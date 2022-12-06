@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+                        http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
+
+    <!--  serviceManger는 필수이며, bean id 고정입니다. -->
+    <bean id="serviceManager" class="com.poscoict.glueframework.biz.control.GlueServiceManagerImpl" lazy-init="true">
+        <property name="cacheManager" ref="cacheManager" />
+        <property name="serviceLoader" ref="serviceLoader" />
+    </bean>
+    <!-- cacheManager는 둘 중 하나를 사용하세요. (GlueEhCacheManager/GlueJCSCacheManager) -->
+    <bean id="cacheManager" class="com.poscoict.glueframework.cache.ehcache.GlueEhCacheManager"/>
+    <!-- 
+    # GlueEhCacheManager 
+    <bean id="cacheManager" class="com.poscoict.glueframework.cache.ehcache.GlueEhCacheManager"/>
+    # GlueJCSCacheManager 
+    <bean id="cacheManager" class="com.poscoict.glueframework.cache.jcs.GlueJCSCacheManager"/>
+    -->
+    <!-- serviceLoader는 둘 중 하나를 사용합니다. (GlueServiceLoader, GlueServiceDBLoader) -->
+    <bean id="serviceLoader" class="com.poscoict.glueframework.biz.control.GlueServiceLoader"/>
+    <!--
+    # GlueServiceLoader
+    <bean id="serviceLoader" class="com.poscoict.glueframework.biz.control.GlueServiceLoader"/>
+    # GlueServiceDBLoader
+    <bean id="serviceLoader" class="com.poscoict.glueframework.biz.control.GlueServiceDBLoader">
+        <property name="dataSource" ref="test-dataSource"/>
+    </bean>
+    -->
+
+    <!-- dao는 셋 중 하나를 사용하세요. (GlueJdbcDao/GlueMybatisDao/GlueHibernateDao) -->
+    <bean id="test-dao" class="com.poscoict.glueframework.dao.jdbc.GlueJdbcDao">
+        <property name="dataSource" ref="test-dataSource"/>
+        <property name="queryManager" ref="queryManager"/>
+    </bean>
+    <!-- 
+    # GlueJdbcDao
+    <bean id="test-dao" class="com.poscoict.glueframework.dao.jdbc.GlueJdbcDao">
+        <property name="dataSource" ref="test-dataSource"/>
+        <property name="queryManager" ref="queryManager"/>
+    </bean>
+    # GlueMybatisDao
+    <bean id="test-dao" class="com.poscoict.glueframework.dao.mybatis.GlueMybatisDao">
+        <property name="sqlSession" ref="sqlSession" />
+    </bean>
+    <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+        <constructor-arg index="0" ref="sqlSessionFactory" />
+    </bean>
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="test-dataSource" />
+        <property name="mapperLocations" value="classpath*:mybatis/mapper/*.xml" />
+    </bean>
+    # GlueHibernateDao
+    <bean id="test-dao" class="com.poscoict.glueframework.dao.hibernate.GlueHibernateDao">
+        <property name="sessionFactory" ref="hbSessionFactory"/>
+        <property name="queryManager" ref="queryManager"/>
+    </bean>
+    <bean id="hbSessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+        <property name="dataSource" ref="test-dataSource"/>
+        <property name="mappingResources">
+            <list>
+                <value>HbSample01.hbm.xml</value>
+            </list>
+        </property>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.HSQLDialect</prop>
+                <prop key="hibernate.show_sql">true</prop>
+                <prop key="hibernate.transaction.flush_before_completion">false</prop>
+            </props>
+        </property>
+    </bean>
+    -->
+    <!-- transaction-manager 는 둘 중 하나를 사용하세요. dao 따라 맞는것을 사용합니다. -->
+    <bean id="test-tx" class="com.poscoict.glueframework.transaction.GlueDataSourceTransactionManager">
+        <property name="dataSource" ref="test-dataSource"/>
+    </bean>
+    <!-- 
+    # GlueDataSourceTransactionManager : GlueJdbcDao와 GlueMybatisDao 용. 
+    <bean id="test-tx" class="com.poscoict.glueframework.transaction.GlueDataSourceTransactionManager">
+        <property name="dataSource" ref="test-dataSource"/>
+    </bean>
+    # GlueHibernateDataSourceTransactionManager : GlueHibernateDao 용. 
+    <bean id="test-tx" class="com.poscoict.glueframework.transaction.GlueHibernateDataSourceTransactionManager">
+        <property name="sessionFactory" ref="hbSessionFactory"/>
+    </bean>
+     -->
+
+    <!-- dataSource는 둘 중 하나를 사용하세요. (JNDI 와 JDBC URL방식) -->
+    <bean id="test-dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="org.sqlite.JDBC"/>
+        <property name="url" value="jdbc:sqlite:/D://software/apache-tomcat-9.0.62/sample.db"/>  
+        <property name="defaultAutoCommit" value="false"/>
+        <property name="minIdle" value="0"/>
+        <property name="maxTotal" value="-1"/>
+        <property name="maxIdle" value="1000"/>
+    </bean>
+    <!--
+    # JNDI
+    <bean id="test-dataSource" class="org.springframework.jndi.JndiObjectFactoryBean"> 
+        <property name="jndiName" value="jdbc/rw/TestDS"/> 
+        <property name="resourceRef" value="false"/> 
+    </bean>
+    # JDBC url for ORACLE : jdbc:mysql://host:port/database
+    <bean id="test-dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
+        <property name="url" value="jdbc:oracle:thin:@127.0.0.1:1521:XE"/>
+        <property name="username" value="scott"/>
+        <property name="password" value="tiger"/>
+        <property name="defaultAutoCommit" value="false"/>
+        <property name="minIdle" value="0"/>
+        <property name="maxTotal" value="-1"/>
+        <property name="maxIdle" value="1000"/>
+    </bean>
+    # JDBC url for MYSQL : jdbc:mysql://host:port/database
+    <bean id="test-dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://127.0.0.1:3306/dbname?characterEncoding=euckr"/>
+        <property name="username" value="user"/>
+        <property name="password" value = "pass"/>
+        <property name="defaultAutoCommit" value = "false"/>
+    </bean>
+    # JDBC url for DB2 : jdbc:db2://host:port/database
+    <bean id="test-dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="com.ibm.db2.jcc.DB2Driver"/>
+        <property name="url" value="jdbc:db2://127.0.0.1:50000/gluedb2:deferPrepares=false;"/>
+        <property name="username" value="scott"/>
+        <property name="password" value="tiger"/>
+        <property name="defaultAutoCommit" value = "false"/>
+    </bean>
+    # JDBC url for PostgreeSQL : jdbc:postgresql://host:port/database
+    <bean id="test-dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="org.postgresql.Driver"/>
+        <property name="url" value="jdbc:postgresql://127.0.0.1:5432/uCOMPOSER_00"/>
+        <property name="username" value="scott"/>
+        <property name="password" value="tiger"/>
+        <property name="defaultAutoCommit" value = "false"/>
+    </bean>
+    # JDBC url for MSSQL Server : jdbc:microsoft:sqlserver://host:port;DatabaseName=database
+    <bean id="test-dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="com.microsoft.jdbc.sqlserver.SQLServerDriver"/>
+        <property name="url" value="jdbc:microsoft:sqlserver://127.0.0.1:1433\\TKTRN1"/>
+        <property name="username" value="WGTUSER"/>
+        <property name="password" value="trnwgtuser"/>
+        <property name="defaultAutoCommit" value = "false"/>
+    </bean>
+    # JDBC url for MSSQL Server 2005 : jdbc:sqlserver://host:port;databaseName=database
+    <bean id="test-dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"/>
+        <property name="url" value="jdbc:sqlserver://127.0.0.1:2111;databaseName=TKTRN1"/>
+        <property name="username" value="WGTUSER"/>
+        <property name="password" value="trnwgtuser"/>
+        <property name="defaultAutoCommit" value = "false"/>
+    </bean>
+    # JDBC url for TimesTen : jdbc:timesten:direct:dsn=sampledb_1121
+    <bean id="test-dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="com.timesten.jdbc.TimesTenDriver"/>
+        <property name="url" value="jdbc:timesten:direct:dsn=sampledb_1121"/>
+        <property name="username" value="scott"/>
+        <property name="password" value="tiger"/>
+        <property name="defaultAutoCommit" value = "false"/>
+    </bean>
+    # JDBC url for Tibero : jdbc:timesten:direct:dsn=sampledb_1121
+    <bean id="test-dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="com.tmax.tibero.jdbc.TbDriver"/>
+        <property name="url" value="jdbc:tibero:thin:@127.0.0.1:8629:tibero"/>
+        <property name="username" value="scott"/>
+        <property name="password" value="tiger"/>
+        <property name="defaultAutoCommit" value="false"/>
+        <property name="minIdle" value="0"/>
+        <property name="maxTotal" value="-1"/>
+        <property name="maxIdle" value="1000"/>
+    </bean>
+    -->
+
+    <bean id="queryManager" class="com.poscoict.glueframework.dao.manager.GlueQueryManagerImpl">
+        <property name="cacheManager" ref="cacheManager"/>
+        <property name="queryLoader" ref="queryLoader"/>
+    </bean>
+    <bean id="queryLoader" class="com.poscoict.glueframework.dao.manager.GlueQueryLoader"/>
+    <!-- queryLoader 의 property : rootPath, extraQueryfiles
+    <bean id="queryLoader" class="com.poscoict.glueframework.dao.manager.GlueQueryLoader">
+        <property name="rootPath" value="query"/>
+    </bean>
+    <bean id="queryLoader" class="com.poscoict.glueframework.dao.manager.GlueQueryLoader">
+        <property name="extraQueryFiles">
+            <list>
+                <value>META-INF/sample-query.glue_sql</value>
+            </list>
+        </property>
+    </bean>
+    -->
+
+    <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+       <property name="basenames">
+          <list>
+             <value>MyResource</value>
+          </list>
+       </property>
+    </bean>
+
+    <!-- layoutManager는 둘 중 하나를 사용하세요. (GlueXmlMessageLayout/GlueDBMessageLayout) -->
+    <!--
+    # GlueXmlMessageLayout
+    <bean id="layoutManager" class="com.poscoict.glueframework.message.layout.GlueXmlMessageLayout">
+        <property name="cacheManager" ref="cacheManager"/>
+    </bean>
+    # GlueXmlMessageLayout
+    <bean id="layoutManager" class="com.poscoict.glueframework.message.layout.GlueDBMessageLayout">
+        <property name="cacheManager" ref="cacheManager"/>
+        <property name="dao" ref="masterdao"/>
+    </bean>
+    <bean id="masterdao" class="com.poscoict.glueframework.dao.jdbc.GlueJdbcDao">
+        <property name="dataSource" ref="layout-dataSource"/>
+        <property name="queryManager" ref="queryManager"/>
+    </bean>
+    <bean id="layout-dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
+        <property name="url" value="jdbc:oracle:thin:@127.0.0.1:1521:XE"/>  
+        <property name="username" value="gluemast"/>
+        <property name="password" value="gluemast"/>
+        <property name="defaultAutoCommit" value="false"/>
+        <property name="minIdle" value="0"/>
+        <property name="maxTotal" value="-1"/>
+        <property name="maxIdle" value="1000"/>
+    </bean>
+    -->
+</beans>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Glue:GlueDiagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Glue="http://www.glueframework.com/activitydiagram/" id="0" location="0,0" size="-1,-1">
+  <child xsi:type="Glue:InitialState" id="1" location="673,105" size="-1,-1" output="//@wire.0"/>
+  <child xsi:type="Glue:Activity" id="2" location="631,163" size="100,-1" input="//@wire.0" output="//@wire.2" name="ResultKeyList">
+    <property key="class" value="com.poscoict.glueframework.biz.activity.GlueResultKeyList"/>
+    <property key="ctx-keys" value="search_result|delete_cnt|insert_cnt|update_cnt"/>
+  </child>
+  <child xsi:type="Glue:Activity" id="3" location="556,256" size="261,-1" input="//@wire.2" output="//@wire.3 //@wire.4 //@wire.5 //@wire.9" name="Router">
+    <property key="class" value="com.poscoict.glueframework.biz.activity.GlueDefaultRouter"/>
+  </child>
+  <child xsi:type="Glue:Activity" id="5" location="629,354" size="46,-1" input="//@wire.3" output="//@wire.6" name="delete">
+    <property key="class" value="sample.activity.GlueJdbcDelete"/>
+  </child>
+  <child xsi:type="Glue:Activity" id="6" location="761,351" size="60,-1" input="//@wire.5" output="//@wire.8" name="update">
+    <property key="class" value="sample.activity.GlueJdbcModify"/>
+  </child>
+  <child xsi:type="Glue:Activity" id="7" location="693,351" size="50,-1" input="//@wire.4" output="//@wire.7" name="insert">
+    <property key="class" value="sample.activity.GlueJdbcInsert"/>
+  </child>
+  <child xsi:type="Glue:FinalState" id="8" location="678,469" size="-1,-1" input="//@wire.6 //@wire.7 //@wire.8 //@wire.10"/>
+  <child xsi:type="Glue:Activity" id="17" location="557,356" size="56,-1" input="//@wire.9" output="//@wire.10" name="find">
+    <property key="class" value="sample.activity.GlueJdbcSearch"/>
+  </child>
+  <property key="test-tx" value="true"/>
+  <property key="description" value=""/>
+  <wire id="0" guardcondition="success" firstRelativePoint="681,124" lastRelativePoint="681,163"/>
+  <wire id="1" guardcondition="success" firstRelativePoint="681,256" lastRelativePoint="681,193"/>
+  <wire id="2" guardcondition="success" firstRelativePoint="711,193" lastRelativePoint="711,256"/>
+  <wire id="4" guardcondition="delete" firstRelativePoint="576,286" lastRelativePoint="576,354"/>
+  <wire id="5" guardcondition="post" firstRelativePoint="642,286" lastRelativePoint="642,354"/>
+  <wire id="6" guardcondition="put" firstRelativePoint="715,286" lastRelativePoint="715,351"/>
+  <wire id="8" guardcondition="success" firstRelativePoint="654,345" lastRelativePoint="682,415"/>
+  <wire id="9" guardcondition="success" firstRelativePoint="695,345" lastRelativePoint="682,415"/>
+  <wire id="10" guardcondition="success" firstRelativePoint="764,342" lastRelativePoint="682,415"/>
+  <wire id="11" guardcondition="get" firstRelativePoint="604,386" lastRelativePoint="688,468"/>
+  <wire id="12" guardcondition="success" firstRelativePoint="604,386" lastRelativePoint="688,468"/>
+</Glue:GlueDiagram>

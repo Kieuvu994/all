@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<service name="sample-service" initial="Router" xmlns="http://www.poscoict.com/glueframework/service">
+  <transaction-manager id="test-tx" commit="true" />
+  <activity name="등록" class="com.poscoict.glueframework.biz.activity.GlueJdbcInsert">
+    <transition name="success" value="Search[조회]" />
+    <property name="sql-key" value="sample.emp.insert" />
+    <property name="chk-name" value="chk_insert" />
+    <property name="dao" value="test-dao" />
+    <property name="param0" value="empno_insert" />
+    <property name="param1" value="ename_insert" />
+    <property name="param2" value="sal_insert" />
+    <property name="param3" value="deptno_insert" />
+    <property name="result-key" value="insertCnt" />
+    <property name="param-count" value="4" />
+  </activity>
+  <activity name="Search[조회]" class="com.poscoict.glueframework.biz.activity.GlueJdbcSearch">
+    <transition name="success" value="end" />
+    <property name="sql-key" value="sample.emp.select" />
+    <property name="dao" value="test-dao" />
+    <property name="param0" value="deptno" />
+    <property name="result-key" value="EmpList" />
+    <property name="param-count" value="1" />
+  </activity>
+  <activity name="SeachEmp-SQL" class="sample.activity.SearchEmp">
+    <transition name="success" value="end" />
+  </activity>
+  <activity name="수정" class="com.poscoict.glueframework.biz.activity.GlueJdbcModify">
+    <transition name="success" value="Search[조회]" />
+    <property name="sql-key" value="sample.emp.update" />
+    <property name="chk-name" value="chk" />
+    <property name="dao" value="test-dao" />
+    <property name="param0" value="SAL" />
+    <property name="param1" value="ENAME" />
+    <property name="param2" value="EMPNO" />
+    <property name="result-key" value="updateCnt" />
+    <property name="param-count" value="3" />
+  </activity>
+  <activity name="Router" class="com.poscoict.glueframework.biz.activity.GlueDefaultRouter">
+    <transition name="success" value="end" />
+    <transition name="find" value="Search[조회]" />
+    <transition name="delete" value="삭제" />
+    <transition name="insert" value="등록" />
+    <transition name="update" value="수정" />
+    <transition name="custom" value="SeachEmp-SQL" />
+  </activity>
+  <activity name="삭제" class="com.poscoict.glueframework.biz.activity.GlueJdbcDelete">
+    <transition name="success" value="Search[조회]" />
+    <property name="sql-key" value="sample.emp.delete" />
+    <property name="chk-name" value="chk" />
+    <property name="dao" value="test-dao" />
+    <property name="param0" value="EMPNO" />
+    <property name="param-count" value="1" />
+  </activity>
+</service>
+

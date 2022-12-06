@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<queryMap desc="queries for restful" xmlns="http://www.poscoict.com/glueframework/query">
+    <query id="restful.emp.select" desc="EMP 조회" resultType="" isNamed="false"><![CDATA[select EMPNO, ENAME, JOB, MGR, HIREDATE, SAL, DEPTNO
+from EMP
+where DEPTNO=?]]></query>
+    <query id="restful.emp.update" desc="EMP 수정" resultType="" isNamed="false"><![CDATA[update emp
+set sal=?, ename=?
+where empno=?]]></query>
+    <query id="restful.emp.delete" desc="EMP 삭제" resultType="" isNamed="false"><![CDATA[delete from emp
+where empno=?]]></query>
+    <query id="restful.emp.insert" desc="EMP 등록" resultType="" isNamed="false"><![CDATA[insert into emp(empno, ename, sal, deptno)
+values(?, ?, ?, ?)]]></query>
+</queryMap>

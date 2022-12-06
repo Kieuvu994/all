@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<service name="restful-service" initial="ResultKeyList" xmlns="http://www.poscoict.com/glueframework/service">
+    <transaction-manager id="test-tx" commit="true"/>
+    <activity name="ResultKeyList" class="com.poscoict.glueframework.biz.activity.GlueResultKeyList">
+        <transition name="success" value="Router"/>
+        <property name="ctx-keys" value="search_result|delete_cnt|insert_cnt|update_cnt"/>
+    </activity>
+    <activity name="Router" class="com.poscoict.glueframework.biz.activity.GlueDefaultRouter">
+        <transition name="post" value="insert"/>
+        <transition name="get" value="find"/>
+        <transition name="delete" value="delete"/>
+        <transition name="put" value="update"/>
+    </activity>
+    <activity name="delete" class="sample.activity.GlueJdbcDelete">
+        <transition name="success" value="end"/>
+    </activity>
+    <activity name="update" class="sample.activity.GlueJdbcModify">
+        <transition name="success" value="end"/>
+    </activity>
+    <activity name="insert" class="sample.activity.GlueJdbcInsert">
+        <transition name="success" value="end"/>
+    </activity>
+    <activity name="find" class="sample.activity.GlueJdbcSearch">
+        <transition name="success" value="end"/>
+    </activity>
+</service>

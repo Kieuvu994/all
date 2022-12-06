@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<msgs xmlns="http://www.poscoict.com/glueframework/layout">
+    <msg id="MSGFW001" name="DEPT">
+        <attribute type="E" seq="1" id="TRANSACTION_CODE" name="TransactionCode" datatype="STRING" length="8"/>
+        <attribute type="E" seq="2" id="CRUD" name="CRUD" datatype="STRING" length="1"/>
+        <attribute type="E" seq="3" id="DEPTNO" name="부서번호" datatype="NUMBER" length="2" precision="0"/>
+        <attribute type="E" seq="4" id="DNAME" name="부서명" datatype="STRING" length="14"/>
+        <attribute type="E" seq="5" id="DLOC" name="부서위치" datatype="STRING" length="13"/>
+    </msg>
+</msgs>

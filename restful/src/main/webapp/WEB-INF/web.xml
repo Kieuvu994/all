@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+                             http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+	version="3.0">
+
+	<description>restful</description>
+	<listener><!-- 02 -->
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>
+			/WEB-INF/classes/applicationContext.xml
+		</param-value>
+	</context-param>
+
+	<servlet>
+		<servlet-name>dispatcher-restful</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>/WEB-INF/dispatcher-restful.xml</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>dispatcher-restful</servlet-name>
+		<url-pattern>/restful/*</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>dispatcher</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>/WEB-INF/dispatcher-servlet.xml</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>dispatcher</servlet-name>
+		<url-pattern>*.mvc</url-pattern>
+	</servlet-mapping>
+
+	<!-- cache clear event receiver <servlet> <servlet-name>cache</servlet-name> 
+		<servlet-class>com.poscoict.glueframework.cache.remote.GlueCacheClearServlet</servlet-class> 
+		<load-on-startup>2</load-on-startup> </servlet> <servlet-mapping> <servlet-name>cache</servlet-name> 
+		<url-pattern>*.cache</url-pattern> </servlet-mapping> -->
+
+	<!-- non-ui <servlet> <servlet-name>HttpReceiver</servlet-name> <servlet-class>com.poscoict.glueframework.web.GlueHttpReceiverAdapter</servlet-class> 
+		</servlet> <servlet-mapping> <servlet-name>HttpReceiver</servlet-name> <url-pattern>*.receiver</url-pattern> 
+		</servlet-mapping> -->
+
+	<session-config>
+		<session-timeout>35</session-timeout>
+	</session-config>
+	<mime-mapping>
+		<extension>html</extension>
+		<mime-type>text/html</mime-type>
+	</mime-mapping>
+	<mime-mapping>
+		<extension>txt</extension>
+		<mime-type>text/plain</mime-type>
+	</mime-mapping>
+</web-app>
